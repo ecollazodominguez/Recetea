@@ -1,14 +1,26 @@
-import "./App.css";
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { Home } from "./Pages/Home";
 
 function App() {
+  const GoUpWhenChangeLocation = () => {
+    const location = useLocation();
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [location.pathname]);
+
+    return null;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/*" element={<Home />} />
+      </Routes>
+      <GoUpWhenChangeLocation />
+    </>
   );
 }
 

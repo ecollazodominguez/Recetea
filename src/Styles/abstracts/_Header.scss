@@ -1,0 +1,23 @@
+.Header-toggle {
+  height: 0px;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 4.2rem;
+  min-width: 120px;
+  width: 20%;
+  background-color: #f1f1f1;
+  border-bottom-left-radius: 20px;
+  transition: height 0.5s ease;
+}
+
+.Header-toggle.is-expanded {
+  height: 100px;
+  background-color: #f1f1f1;
+  min-width: 120px;
+  width: 20%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.298);
+  border-bottom: 2px solid rgb(24, 0, 122);
+  border-left: 3px solid rgb(24, 0, 122);
+  border-bottom-left-radius: 20px;
+}
