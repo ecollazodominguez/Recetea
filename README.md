@@ -1,46 +1,54 @@
-# Getting Started with Create React App
+# RECETEA
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Recetea is a open-source application web about cooking recipes made with REACT. Here you can search, favorite and share cooking recipes.
 
-## Available Scripts
+This app web is responsive being first mobile, make sure to take a peek.
 
-In the project directory, you can run:
+<!-- ## - Mobile version
 
-### `npm start`
+<p align="center">
+<img src="./dataForReadme/.gif" width="350" height="650" />
+</p>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## - Desktop version
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<p align="center">
+<img src="./dataForReadme/.gif" width="700" height="450" />
+</p> -->
 
-### `npm test`
+# TECNOLOGIES
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Frontend:
 
-### `npm run build`
+- React
+  - React Router
+- Typescript
+- Sass
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<!-- Backend:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Java Spring
+- MySQL -->
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# INSTALL
 
-### `npm run eject`
+If you want to check the web in your own computer or server you can do it!
+All you need to do is clone this repository on your and make sure that you have Node.js already installed.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Open a terminal on the repository folder and type the following command to install all modules. This command will install all required modules to make the REACT project work.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```cmd
+npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<!-- # DATABASE & API
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+You will need the server API and the database that we created specifically for this.
 
-## Learn More
+In the link bellow you can find it and the instructions to make it work
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [Octonews API](https://github.com/carmenpelaez/Octonews_API "Octonews API") -->
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# SHARE YOUR OPINION
+
+If you checked the app web, we would love to hear opinions from you. Changes, improvements... anything is welcome! Thank you.
