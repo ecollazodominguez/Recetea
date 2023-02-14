@@ -1,10 +1,13 @@
 import { Header } from "../components/Header/Header";
+import { LatestRecipeCard } from "../components/Home/LatestRecipeCard";
 
 export const Home = () => {
   return (
     <>
       <Header />
-      <main></main>
+      <main>
+        <LatestRecipeCard />
+      </main>
     </>
   );
 };

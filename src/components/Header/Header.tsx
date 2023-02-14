@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
-import { Console, log } from "console";
 
 const islogged = false; // Testing purposes
 
