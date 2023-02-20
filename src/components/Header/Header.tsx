@@ -141,7 +141,7 @@ const NavMenuContent = ({
             : "Header-toggleArticle"
         }
       >
-        <h2 className="Header-h2">Receteado</h2>
+        <h2 className="Header-h2">Recetea</h2>
         <nav className="Header-navToggle">
           <Link to="/" className="Header-linkToggle">
             Recetas Veganas

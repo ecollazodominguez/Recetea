@@ -1,0 +1,25 @@
+.RecipesList {
+  display: grid;
+  max-width: 1200px;
+  grid-template-columns: 1fr 300px;
+  justify-items: center;
+  margin: 0 auto;
+}
+
+.RecipeCardList {
+  grid-column: span 2;
+  justify-self: flex-end;
+
+  @media (width > 1200px) {
+    grid-column: span 1;
+  }
+}
+
+.RecipeCardList:not(:first-child) {
+  grid-row: 2;
+}
+
+.CategoryRecipeList {
+  grid-column: 2;
+  grid-row: 1;
+}

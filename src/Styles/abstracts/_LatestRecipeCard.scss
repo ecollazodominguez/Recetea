@@ -67,24 +67,24 @@
     &-Like {
       height: 45px;
       width: 45px;
-      top: 190px;
+      top: 205px;
       left: 345px;
     }
   }
 
-  @media (width > 1000px) {
+  @media (width > 1200px) {
     height: 400px;
     &-article {
       display: flex;
       flex-flow: row-reverse nowrap;
-      width: 960px;
+      width: 1200px;
       height: 400px;
       padding: 1.5rem 0;
     }
 
     &-imageContent {
       height: 350px;
-      width: 500px;
+      width: 860px;
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
     }
@@ -92,13 +92,13 @@
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
       height: 350px;
-      width: 400px;
+      width: 566px;
     }
     &-Like {
-      height: 50px;
-      width: 50px;
-      top: 290px;
-      left: 335px;
+      height: 60px;
+      width: 60px;
+      top: 285px;
+      left: 495px;
     }
     &-textContent {
       border-top-left-radius: 10px;

@@ -1,8 +1,11 @@
 import { Header } from "../components/Header/Header";
+import { CategoryRecipeList } from "../components/Home/CategoryRecipesList";
 import { RecipeCard } from "../components/RecipeCard";
 import { RecipeList } from "../components/RecipeList";
+import { useWindowDimensions } from "../hooks/useWindowDimensions";
 
 export const Home = () => {
+  const { height, width } = useWindowDimensions();
   //Test purposes
   const recipe = {
     title: "Pollo al ajillo",
@@ -25,8 +28,11 @@ export const Home = () => {
             className="LatestRecipeCard"
           />
         </section>
-        <RecipeList recipesTypeTitle="Recetas fáciles" />
-        <RecipeList recipesTypeTitle="Recetas Veganas" />
+        <section className="RecipesList">
+          <RecipeList recipesTypeTitle="Recetas fáciles" />
+          <RecipeList recipesTypeTitle="Recetas Veganas" />
+          {width > 1200 ? <CategoryRecipeList /> : ""}
+        </section>
       </main>
     </>
   );

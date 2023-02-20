@@ -1,10 +1,12 @@
 /*font*/
 /*abstracts*/
 @use "./Styles/abstracts/App";
+@use "./Styles//abstracts/Home";
 @use "./Styles/abstracts/Header";
 @use "./Styles/abstracts/LatestRecipeCard";
 @use "./Styles/abstracts/RecipeCardList";
 @use "./Styles/abstracts/RecipeCard";
+@use "./Styles/abstracts/CategoryRecipesList";
 
 /*base*/
 @use "./Styles/base/resets";
