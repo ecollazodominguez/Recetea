@@ -1,0 +1,15 @@
+/*font*/
+/*abstracts*/
+@use "./Styles/abstracts/App";
+@use "./Styles//abstracts/Home";
+@use "./Styles/abstracts/Header";
+@use "./Styles/abstracts/LatestRecipeCard";
+@use "./Styles/abstracts/RecipeCardList";
+@use "./Styles/abstracts/RecipeCard";
+@use "./Styles/abstracts/CategoryRecipesList";
+
+/*base*/
+@use "./Styles/base/resets";
+
+/*font*/
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");

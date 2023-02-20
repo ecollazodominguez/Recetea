@@ -1,0 +1,18 @@
+.RecipeCardList {
+  &-h2 {
+    margin-top: 2rem;
+    padding: 0.1rem;
+    text-align: center;
+    font-size: 24px;
+    background-color: rgb(252, 234, 209);
+    font-weight: 600;
+  }
+  &-ul {
+    width: 90%;
+    margin: 2rem auto 1rem auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    gap: 2rem;
+  }
+}
