@@ -1,6 +1,6 @@
 # RECETEA
 
-Recetea is a open-source application web about cooking recipes made with REACT. Here you can search, favorite and share cooking recipes.
+Recetea is a open-source application web about cooking recipes made with `REACT`. Here you can search, favorite and share cooking recipes.
 
 This app web is responsive being first mobile, make sure to take a peek.
 
@@ -16,7 +16,7 @@ This app web is responsive being first mobile, make sure to take a peek.
 <img src="./dataForReadme/.gif" width="700" height="450" />
 </p> -->
 
-# TECNOLOGIES
+# TECHNOLOGIES
 
 Frontend:
 
@@ -25,29 +25,36 @@ Frontend:
 - Typescript
 - Sass
 
-<!-- Backend:
+Backend:
 
-- Java Spring
-- MySQL -->
+- Java Spring Boot
+  - Spring Web
+  - Spring Data JPA / Hibernate
+  - Lombok
+  - Spring Security
+  - MySQL Driver
+- MySQL
 
 # INSTALL
 
-If you want to check the web in your own computer or server you can do it!
-All you need to do is clone this repository on your and make sure that you have Node.js already installed.
+If you want to test the web in your own computer you can do it!
+All you need to do is clone this repository on your computer and make sure that you have `Node.js, Java JDK v11+ and MySQL` already installed.
 
-Open a terminal on the repository folder and type the following command to install all modules. This command will install all required modules to make the REACT project work.
+First of all you have to run the `API Services`, for that go to the [API](api/) folder and you will find the services. You will need to run every service with your `prefered IDE (Intellij IDEA, Eclipse, etc...)`.
+
+After having all the services running, open a terminal on the root repository folder and type the following command to install all modules. `This command will install all required modules to make the REACT server work`.
 
 ```cmd
 npm install
 ```
 
-<!-- # DATABASE & API
+When it's done all you have to do is `start the frontend server with`:
 
-You will need the server API and the database that we created specifically for this.
+```cmd
+npm start
+```
 
-In the link bellow you can find it and the instructions to make it work
-
-- [Octonews API](https://github.com/carmenpelaez/Octonews_API "Octonews API") -->
+Enjoy!
 
 # SHARE YOUR OPINION
 
