@@ -4,15 +4,12 @@ import com.receteausersservice.receteausersservice.models.UserModel;
 
 public class Utils {
 
-//Method to update the DBUser from data sent from frontend.
-    // If the data sent (requestUser) has any attribute value. It will be assigned to the DBUser, if there is no attribute, value will stay the same.
-    public UserModel getUpdatedUser(UserModel requestUser, UserModel dbUser){
-        if (requestUser.getName() != null) {
-            dbUser.setName(requestUser.getName());
-        }
-        if (requestUser.getEmail() != null) {
-            dbUser.setEmail(requestUser.getEmail());
-        }
+//Method to merge the DBUser and requestUser from data sent from frontend.
+    // If the data sent (requestUser) has any attribute value. It will be assigned to DBUser, if there is no value, will stay the same.
+    public UserModel mergeUser(UserModel requestUser, UserModel dbUser){
+
+        dbUser.setName((requestUser.getName() != null) ? requestUser.getName() : dbUser.getName());
+        dbUser.setEmail((requestUser.getEmail() != null) ? requestUser.getEmail() : dbUser.getEmail());
 
         return dbUser;
 

@@ -3,6 +3,7 @@ package com.receteausersservice.receteausersservice.controllers;
 import com.receteausersservice.receteausersservice.Utils.Utils;
 import com.receteausersservice.receteausersservice.models.UserModel;
 import com.receteausersservice.receteausersservice.services.UserServiceImp;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,11 @@ public class UserController {
 
     @Autowired
     private UserServiceImp userServiceImp;
+
+    @GetMapping("/")
+    public ArrayList<UserModel> login(){
+        return userServiceImp.getUsers();
+    }
 
     @GetMapping("/all")
     public ArrayList<UserModel> getUsers(){
@@ -29,11 +35,14 @@ public class UserController {
         return userServiceImp.getUserById(id);
     }
     @PutMapping("/{id}")
-    public UserModel updateUser(@PathVariable Long id ,@RequestBody UserModel user){
-        Utils checkUser = new Utils();
+    public String updateUser(@PathVariable Long id ,@RequestBody UserModel user){
+        Utils userUtils = new Utils();
+        UserModel mergedUser;
+
         UserModel dbUser = userServiceImp.getUserById(id);
-        dbUser = checkUser.getUpdatedUser(user, dbUser);
-        return dbUser;
+        mergedUser = userUtils.mergeUser(user, dbUser);
+        userServiceImp.updateUser(mergedUser);
+        return "updated";
     }
 
     @PostMapping("/{id}")

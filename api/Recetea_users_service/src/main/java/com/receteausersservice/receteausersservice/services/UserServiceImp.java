@@ -30,4 +30,9 @@ public class UserServiceImp implements IUserService {
     public void deleteUser(Long Id) {
         userRepository.deleteById(Id);
     }
+
+    @Override
+    public void updateUser(UserModel user) {
+        userRepository.save(user);
+    }
 }
