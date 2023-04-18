@@ -1,5 +1,6 @@
 package com.receteausersservice.receteausersservice.controllers;
 
+import com.receteausersservice.receteausersservice.Utils.JWTUtil;
 import com.receteausersservice.receteausersservice.Utils.Utils;
 import com.receteausersservice.receteausersservice.models.UserModel;
 import com.receteausersservice.receteausersservice.services.UserServiceImp;
@@ -17,8 +18,18 @@ public class UserController {
     @Autowired
     private UserServiceImp userServiceImp;
 
+    @Autowired
+    private JWTUtil jwtUtil;
+
+    private boolean tokenValidate(String token){
+        String userId = jwtUtil.getKey(token);
+        return userId != null;
+    }
+
     @GetMapping("/all")
-    public ArrayList<UserModel> getUsers(){
+    public ArrayList<UserModel> getUsers(@RequestHeader(value="Authorization") String token){
+        if(!tokenValidate(token)) return null;
+
         return userServiceImp.getUsers();
     }
 
@@ -32,11 +43,15 @@ public class UserController {
         return userServiceImp.addUser(user);
     }
     @GetMapping("/{id}")
-    public UserModel getUserById(@PathVariable Long id){
+    public UserModel getUserById(@RequestHeader(value="Authorization") String token, @PathVariable Long id){
+        if(!tokenValidate(token)) return null;
+
         return userServiceImp.getUserById(id);
     }
     @PutMapping("/{id}")
-    public String updateUser(@PathVariable Long id ,@RequestBody UserModel user){
+    public String updateUser(@RequestHeader(value="Authorization") String token, @PathVariable Long id ,@RequestBody UserModel user){
+        if(!tokenValidate(token)) return null;
+
         Utils userUtils = new Utils();
         UserModel mergedUser;
 
@@ -47,7 +62,9 @@ public class UserController {
     }
 
     @PostMapping("/{id}")
-    public String deleteUser(@PathVariable Long id){
+    public String deleteUser(@RequestHeader(value="Authorization") String token, @PathVariable Long id){
+        if(!tokenValidate(token)) return null;
+
         userServiceImp.deleteUser(id);
         return "done";
     }

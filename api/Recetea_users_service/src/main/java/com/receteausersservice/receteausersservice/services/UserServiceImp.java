@@ -45,16 +45,20 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public boolean verifyCredentials(UserModel user) {
+    public UserModel verifyCredentials(UserModel user) {
         String query = "FROM UserModel WHERE email = :email";
         List<UserModel> userList = entityManager.createQuery(query)
                 .setParameter("email", user.getEmail())
                 .getResultList();
 
-        if (userList.isEmpty()) return false;
+        if (userList.isEmpty()) return null;
 
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-        return argon2.verify(userList.get(0).getPassword(), user.getPassword());
+
+        if(argon2.verify(userList.get(0).getPassword(), user.getPassword())) return userList.get(0);
+
+        return null;
+
 
     }
 

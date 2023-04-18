@@ -14,5 +14,5 @@ public interface IUserService {
 
     void updateUser(UserModel user);
 
-    boolean verifyCredentials(UserModel user);
+    UserModel verifyCredentials(UserModel user);
 }
