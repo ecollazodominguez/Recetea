@@ -32,6 +32,9 @@ Backend:
   - Spring Data JPA / Hibernate
   - Lombok
   - Spring Security
+  - Jakarta
+  - Json Web Token (JWT)
+  - Argon2 (Password hasher)
   - MySQL Driver
 - MySQL
 

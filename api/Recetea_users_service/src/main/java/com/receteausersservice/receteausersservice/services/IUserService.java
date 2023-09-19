@@ -5,10 +5,14 @@ import com.receteausersservice.receteausersservice.models.UserModel;
 import java.util.ArrayList;
 
 public interface IUserService {
-    public ArrayList<UserModel> getUsers();
-    public UserModel getUserById(Long Id);
+    ArrayList<UserModel> getUsers();
+    UserModel getUserById(Long Id);
 
-    public UserModel addUser(UserModel user);
+    UserModel addUser(UserModel user);
 
-    public void deleteUser(Long Id);
+    void deleteUser(Long Id);
+
+    void updateUser(UserModel user);
+
+    UserModel verifyCredentials(UserModel user);
 }
