@@ -61,7 +61,7 @@ public class UserController {
         return "updated";
     }
 
-    @PostMapping("/{id}")
+    @DeleteMapping("/{id}")
     public String deleteUser(@RequestHeader(value="Authorization") String token, @PathVariable Long id){
         if(!tokenValidate(token)) return null;
 
