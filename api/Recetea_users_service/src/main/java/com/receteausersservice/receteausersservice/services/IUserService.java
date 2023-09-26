@@ -3,6 +3,7 @@ package com.receteausersservice.receteausersservice.services;
 import com.receteausersservice.receteausersservice.models.UserModel;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public interface IUserService {
     ArrayList<UserModel> getUsers();
@@ -12,7 +13,9 @@ public interface IUserService {
 
     void deleteUser(Long Id);
 
-    void updateUser(UserModel user);
+    UserModel updateUser(UserModel user);
 
-    UserModel verifyCredentials(UserModel user);
+    Optional<UserModel> getUserByEmail(String email);
+
+    //UserModel verifyCredentials(UserModel user);
 }

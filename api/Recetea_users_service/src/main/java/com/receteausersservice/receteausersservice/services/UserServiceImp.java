@@ -2,23 +2,48 @@ package com.receteausersservice.receteausersservice.services;
 
 import com.receteausersservice.receteausersservice.models.UserModel;
 import com.receteausersservice.receteausersservice.repositories.IUserRepository;
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UserServiceImp implements IUserService {
+public class UserServiceImp implements IUserService, UserDetailsService {
     @Autowired
     IUserRepository userRepository;
 
     @PersistenceContext
     EntityManager entityManager;
+
+    @Autowired
+    private UserServiceImp userServiceImp;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserModelDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        try {
+            Optional<UserModel> userDetail = userServiceImp.getUserByEmail(email);
+
+            // Converting userDetail to UserDetails
+            return userDetail.map(UserModelDetails::new)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found " + email));
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            }
+    }
 
     public ArrayList<UserModel> getUsers(){
         return (ArrayList<UserModel>) userRepository.findAll();
@@ -32,6 +57,7 @@ public class UserServiceImp implements IUserService {
 
     @Override
     public UserModel addUser(UserModel user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
     @Override
@@ -40,12 +66,25 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public void updateUser(UserModel user) {
-        userRepository.save(user);
+    public UserModel updateUser(UserModel user) {
+        return userRepository.save(user);
     }
 
     @Override
-    public UserModel verifyCredentials(UserModel user) {
+    public Optional<UserModel> getUserByEmail(String email) {
+        String query = "FROM UserModel WHERE email = :email";
+        List<UserModel> userList = entityManager.createQuery(query)
+                .setParameter("email", email)
+                .getResultList();
+
+        if (userList.isEmpty()) return null;
+
+        return Optional.of(userList.get(0));
+    }
+    /**
+    @Override
+
+         public UserModel verifyCredentials(UserModel user) {
         String query = "FROM UserModel WHERE email = :email";
         List<UserModel> userList = entityManager.createQuery(query)
                 .setParameter("email", user.getEmail())
@@ -61,6 +100,7 @@ public class UserServiceImp implements IUserService {
 
 
     }
+     */
 
 
 }
