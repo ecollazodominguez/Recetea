@@ -1,14 +1,14 @@
 package com.receteausersservice.receteausersservice.controllers;
 
 import com.receteausersservice.receteausersservice.models.AuthRequest;
-
 import com.receteausersservice.receteausersservice.services.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/login")
@@ -28,11 +28,12 @@ public class AuthController {
                 if (authentication.isAuthenticated()) {
                     return jwtService.generateToken(authRequest.getEmail());
                 } else {
-                    throw new UsernameNotFoundException("invalid user request !");
+                    throw new ResponseStatusException(
+                            HttpStatus.FORBIDDEN, "Your email or password is wrong. Try again");
                 }
             }catch (Exception e){
-                System.out.println("Authentication failed: " + e.getMessage());
-                throw new UsernameNotFoundException("Authentication failed!");
+                throw new ResponseStatusException(
+                        HttpStatus.FORBIDDEN, "Your email or password is wrong. Try again", e);
             }
         }
 

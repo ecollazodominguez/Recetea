@@ -2,9 +2,8 @@ package com.receteausersservice.receteausersservice.services;
 
 import com.receteausersservice.receteausersservice.models.UserModel;
 import com.receteausersservice.receteausersservice.repositories.IUserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +34,15 @@ public class UserServiceImp implements IUserService, UserDetailsService {
     @Override
     public UserModelDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Optional<UserModel> userDetail = userServiceImp.getUserByEmail(email);
+        try {
+            Optional<UserModel> userDetail = userServiceImp.getUserByEmail(email);
 
-        // Converting userDetail to UserDetails
-        return userDetail.map(UserModelDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found " + email));
+            // Converting userDetail to UserDetails
+            return userDetail.map(UserModelDetails::new)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found " + email));
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            }
     }
 
     public ArrayList<UserModel> getUsers(){
@@ -62,8 +66,8 @@ public class UserServiceImp implements IUserService, UserDetailsService {
     }
 
     @Override
-    public void updateUser(UserModel user) {
-        userRepository.save(user);
+    public UserModel updateUser(UserModel user) {
+        return userRepository.save(user);
     }
 
     @Override

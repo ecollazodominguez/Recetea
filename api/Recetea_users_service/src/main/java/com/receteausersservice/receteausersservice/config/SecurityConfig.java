@@ -41,7 +41,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
                             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                             .and()
                         .authorizeHttpRequests()
-                            .requestMatchers("/api/login", "/api/user/add").permitAll()
+                            .requestMatchers("/api/login", "/api/user/add","/error").permitAll()
                             .anyRequest().authenticated()
                             .and()
                         .authenticationProvider(authenticationProvider())
