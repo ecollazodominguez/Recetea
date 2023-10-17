@@ -1,4 +1,4 @@
-package com.receteausersservice.receteausersservice.models;
+package com.receteausersservice.receteausersservice.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,7 @@
 package com.receteausersservice.receteausersservice.services;
 
+import com.receteausersservice.receteausersservice.dto.UserRequest;
+import com.receteausersservice.receteausersservice.dto.UserResponse;
 import com.receteausersservice.receteausersservice.models.UserModel;
 import com.receteausersservice.receteausersservice.repositories.IUserRepository;
 import org.springframework.http.HttpStatus;
@@ -13,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,20 +46,52 @@ public class UserServiceImp implements IUserService, UserDetailsService {
             }
     }
 
-    public ArrayList<UserModel> getUsers(){
-        return (ArrayList<UserModel>) userRepository.findAll();
+    public List<UserResponse> getUsers(){
+        List<UserModel> users = userRepository.findAll();
+
+        return users.stream().map(this::mapToUserResponse).toList();
+
+    }
+
+    private UserResponse mapToUserResponse(UserModel user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .diet(user.getDiet())
+                .favorite_recipes((user.getFavorite_recipes()))
+                .build();
     }
 
 
     @Override
-    public UserModel getUserById(Long Id) {
-        return userRepository.getReferenceById(Id);
+    public UserResponse getUserById(Long Id) {
+
+        UserModel user = userRepository.getReferenceById(Id);
+
+        return UserResponse.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .diet(user.getDiet())
+                .favorite_recipes((user.getFavorite_recipes()))
+                .build();
+
     }
 
     @Override
-    public UserModel addUser(UserModel user) {
+    public Boolean addUser(UserRequest user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+
+        UserModel newUser = UserModel.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .diet(user.getDiet())
+                .build();
+
+        userRepository.save(newUser);
+        return true;
     }
     @Override
     public void deleteUser(Long Id) {
@@ -66,8 +99,19 @@ public class UserServiceImp implements IUserService, UserDetailsService {
     }
 
     @Override
-    public UserModel updateUser(UserModel user) {
-        return userRepository.save(user);
+    public UserResponse updateUser(UserResponse user, Long id) {
+
+        UserModel dbUser = userRepository.getReferenceById(id);
+        dbUser = mergeUser(user, dbUser);
+        userRepository.save(dbUser);
+
+        return UserResponse.builder()
+                .id(dbUser.getId())
+                .name(dbUser.getName())
+                .email(dbUser.getEmail())
+                .diet(dbUser.getDiet())
+                .favorite_recipes(dbUser.getFavorite_recipes())
+                .build();
     }
 
     @Override
@@ -81,26 +125,15 @@ public class UserServiceImp implements IUserService, UserDetailsService {
 
         return Optional.of(userList.get(0));
     }
-    /**
-    @Override
 
-         public UserModel verifyCredentials(UserModel user) {
-        String query = "FROM UserModel WHERE email = :email";
-        List<UserModel> userList = entityManager.createQuery(query)
-                .setParameter("email", user.getEmail())
-                .getResultList();
+    //Method to merge the DBUser and requestUser from data sent from frontend.
+    // If the data sent (requestUser) has any attribute value. It will be assigned to DBUser, if there is no value, will stay the same.
+    public UserModel mergeUser(UserResponse requestUser, UserModel dbUser){
 
-        if (userList.isEmpty()) return null;
+        dbUser.setName((requestUser.getName() != null) ? requestUser.getName() : dbUser.getName());
+        dbUser.setEmail((requestUser.getEmail() != null) ? requestUser.getEmail() : dbUser.getEmail());
 
-        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-
-        if(argon2.verify(userList.get(0).getPassword(), user.getPassword())) return userList.get(0);
-
-        return null;
-
+        return dbUser;
 
     }
-     */
-
-
 }
