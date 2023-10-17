@@ -1,19 +1,21 @@
 package com.receteausersservice.receteausersservice.services;
 
+import com.receteausersservice.receteausersservice.dto.UserRequest;
+import com.receteausersservice.receteausersservice.dto.UserResponse;
 import com.receteausersservice.receteausersservice.models.UserModel;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
-    ArrayList<UserModel> getUsers();
-    UserModel getUserById(Long Id);
+    List<UserResponse> getUsers();
+    UserResponse getUserById(Long Id);
 
-    UserModel addUser(UserModel user);
+    Boolean addUser(UserRequest user);
 
     void deleteUser(Long Id);
 
-    UserModel updateUser(UserModel user);
+    UserResponse updateUser(UserResponse user, Long id);
 
     Optional<UserModel> getUserByEmail(String email);
 

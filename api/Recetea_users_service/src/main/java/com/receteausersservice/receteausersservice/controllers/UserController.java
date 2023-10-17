@@ -1,7 +1,7 @@
 package com.receteausersservice.receteausersservice.controllers;
 
-import com.receteausersservice.receteausersservice.Utils.Utils;
-import com.receteausersservice.receteausersservice.models.UserModel;
+import com.receteausersservice.receteausersservice.dto.UserRequest;
+import com.receteausersservice.receteausersservice.dto.UserResponse;
 import com.receteausersservice.receteausersservice.services.JwtService;
 import com.receteausersservice.receteausersservice.services.UserModelDetails;
 import com.receteausersservice.receteausersservice.services.UserServiceImp;
@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -25,18 +25,16 @@ public class UserController {
     private JwtService jwtService;
 
     @GetMapping("/all")
-    public ArrayList<UserModel> getUsers(@RequestHeader(value="Authorization") String token){
-        ArrayList<UserModel> users = userServiceImp.getUsers();
+    public List<UserResponse> getUsers(@RequestHeader(value="Authorization") String token){
+        List<UserResponse> users = userServiceImp.getUsers();
 
         if (users == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No users Found");
 
         return users;
-
-
     }
 
     @PostMapping("/add")
-    public UserModel addUser(@RequestBody UserModel user){
+    public Boolean addUser(@RequestBody UserRequest user){
 
         if (user.getEmail() == null || user.getPassword() == null || user.getName() == null || user.getDiet() == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Some information is missing");
@@ -49,7 +47,7 @@ public class UserController {
 
     }
     @GetMapping("/{id}")
-    public UserModel getUserById(@RequestHeader(value="Authorization") String token, @PathVariable Long id){
+    public UserResponse getUserById(@RequestHeader(value="Authorization") String token, @PathVariable Long id){
 
         try {
             return userServiceImp.getUserById(id);
@@ -59,18 +57,15 @@ public class UserController {
         }
     }
     @PutMapping("/{id}")
-    public UserModel updateUser(@RequestHeader(value="Authorization") String token, @PathVariable Long id ,@RequestBody UserModel user, HttpServletRequest request){
+    public UserResponse updateUser(@RequestHeader(value="Authorization") String token, @PathVariable Long id ,@RequestBody UserResponse user, HttpServletRequest request){
         try {
             token = token.substring(7);
-            UserModel requestUser = userServiceImp.getUserById(id);
+            UserResponse dbUser = userServiceImp.getUserById(id);
 
-            UserModelDetails userModelDetails = userServiceImp.loadUserByUsername(requestUser.getEmail());
+            UserModelDetails userModelDetails = userServiceImp.loadUserByUsername(dbUser.getEmail());
             if (jwtService.validateToken(token, userModelDetails)) {
-                Utils userUtils = new Utils();
-                UserModel dbUser = userServiceImp.getUserById(id);
-                requestUser = userUtils.mergeUser(user, dbUser);
 
-                return userServiceImp.updateUser(requestUser);
+                return userServiceImp.updateUser(user, id);
             }else{
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Your ID doesn't match with this one");
             }
@@ -84,7 +79,7 @@ public class UserController {
     public ResponseEntity deleteUser(@RequestHeader(value="Authorization") String token, @PathVariable Long id){
         try {
             token = token.substring(7);
-            UserModel requestUser = userServiceImp.getUserById(id);
+            UserResponse requestUser = userServiceImp.getUserById(id);
             UserModelDetails userModelDetails = userServiceImp.loadUserByUsername(requestUser.getEmail());
             if (jwtService.validateToken(token, userModelDetails)) {
                 userServiceImp.deleteUser(id);

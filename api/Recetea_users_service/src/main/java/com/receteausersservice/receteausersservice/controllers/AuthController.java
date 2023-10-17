@@ -1,6 +1,6 @@
 package com.receteausersservice.receteausersservice.controllers;
 
-import com.receteausersservice.receteausersservice.models.AuthRequest;
+import com.receteausersservice.receteausersservice.dto.AuthRequest;
 import com.receteausersservice.receteausersservice.services.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
